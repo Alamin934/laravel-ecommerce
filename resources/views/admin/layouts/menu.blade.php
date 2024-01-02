@@ -16,7 +16,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link">
+            <a href="{{route('admin.dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
             </a>
@@ -34,7 +34,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{route('admin.all-category')}}" class="menu-link">
                         <div data-i18n="All Category">All Category</div>
                     </a>
                 </li>
@@ -58,7 +58,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{route('admin.all-subCategory')}}" class="menu-link">
                         <div data-i18n="All Category">All Sub Category</div>
                     </a>
                 </li>
@@ -82,7 +82,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{route('admin.all-product')}}" class="menu-link">
                         <div data-i18n="All Category">All Product</div>
                     </a>
                 </li>
@@ -106,7 +106,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{route('admin.all-order')}}" class="menu-link">
                         <div data-i18n="All Category">All Orders</div>
                     </a>
                 </li>
