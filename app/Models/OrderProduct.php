@@ -5,24 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{HasOne, HasMany, BelongsTo};
-use App\Models\Product;
+use App\Models\{Order,Product};
 
-class Category extends Model
+class OrderProduct extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function parent_category(){
-        return $this->belongsTo(__CLASS__);
-    }
+    public $timestamps = false;
 
-    public function child_category(){
-        return $this->hasMany(__CLASS__);
+    public function order(){
+        return $this->belongsTo(Order::class);
     }
 
     public function product(){
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
-
 }
