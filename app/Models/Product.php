@@ -16,9 +16,9 @@ class Product extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected static function booted(): void
-    {
-        static::created(function (Product $product) {
+    protected static function boot() { 
+        parent::boot();
+        static::creating(function (Product $product) {
             $product->slug = Str::slug($product->title,'-');
         });
     }
