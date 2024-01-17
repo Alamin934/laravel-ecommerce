@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_status')->default('pending');
             $table->string('payment_details');
             $table->string('operational_status')->default('pending');
+            $table->unsignedBigInteger('processed_by')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreign('processed_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
