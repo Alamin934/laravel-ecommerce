@@ -1,5 +1,6 @@
 <header class="text-gray-600 body-font">
     <div class="container mx-auto">
+        {{-- Desktop Menu --}}
         <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
             <a class="text-3xl font-bold leading-none" href="{{url('/home')}}">
                 L-Ecommerce
@@ -143,5 +144,13 @@
                 </div>
             </nav>
         </div>
+
+        {{-- Categories --}}
+        <nav class="md:ml-auto flex flex-wrap items-center bg-purple-600 text-base justify-center">
+            <span class="text-gray-200 mr-2">Category:</span>
+            @foreach ($categories as $category)
+            <a class="mr-5 text-white hover:text-purple-900 py-3" href="{{$category->slug}}">{{$category->name}}</a>
+            @endforeach
+        </nav>
     </div>
 </header>
