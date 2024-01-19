@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FrontEnd\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'showHomePage'])->name('home');
+// Product Controller
+Route::get('/product/{slug}', [ProductController::class, 'showProductDetails'])->name('product.details');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
