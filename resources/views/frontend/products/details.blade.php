@@ -112,7 +112,12 @@
                 {{-- Price & Cart, Wishlist Button --}}
                 <div class="flex">
                     {{-- price --}}
-                    <span class="title-font font-medium text-2xl text-gray-900">BDT {{ $item->price }}</span>
+                    <span class="title-font font-medium text-2xl text-gray-900">BDT @if ($item->sell_price == 0 ||
+                        $item->sell_price == null)
+                        {{$item->price}}
+                        @else
+                        <strike class="mr-2">{{$item->price}}</strike> {{$item->sell_price}}
+                        @endif</span>
                     {{-- Add to Cart --}}
                     <button
                         class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add

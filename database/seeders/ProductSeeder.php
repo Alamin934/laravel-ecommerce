@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(15)->create();
+        Product::factory(20)->create();
 
         $product_ids = Product::select('id')->get();
 

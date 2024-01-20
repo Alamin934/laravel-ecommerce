@@ -21,6 +21,7 @@ class ProductFactory extends Factory
            'category_id' => \App\Models\Category::all()->random()->id,
            'description' => fake()->realText(),
            'price' => random_int(100, 1000),
+           'sell_price' => random_int(50, 500),
         ];
     }
 }

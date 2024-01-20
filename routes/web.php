@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FrontEnd\ProductController;
+use App\Http\Controllers\FrontEnd\{ProductController,CartController};
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +15,18 @@ use App\Http\Controllers\FrontEnd\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/home', [HomeController::class, 'showHomePage'])->name('home');
+Route::get('/', [HomeController::class, 'showHomePage'])->name('home');
+
 // Product Controller
 Route::get('/product/{slug}', [ProductController::class, 'showProductDetails'])->name('product.details');
+
+// Cart Controller
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

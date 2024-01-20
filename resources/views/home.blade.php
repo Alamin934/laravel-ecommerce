@@ -48,11 +48,21 @@
                             <h2 class="text-gray-900 title-font text-md font-medium">{{$product->title}}</h2>
                         </a>
                         <div class="py-3">
-                            <button
-                                class="inline-flex items-center bg-purple-500 border-0 py-1 px-3 focus:outline-none hover:bg-purple-600 rounded text-white">Add
-                                to Cart
-                            </button>
-                            <p class="float-end">BDT {{$product->price}}</p>
+                            <form action="{{route('cart.add')}}" method="post" class="inline-flex items-center">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                <button type="submit"
+                                    class="bg-purple-500 border-0 py-1 px-3 focus:outline-none hover:bg-purple-600 rounded text-white">Add
+                                    to Cart
+                                </button>
+                            </form>
+                            <p class="float-end">BDT
+                                @if ($product->sell_price == 0 || $product->sell_price == null)
+                                {{$product->price}}
+                                @else
+                                <strike class="mr-2">{{$product->price}}</strike> {{$product->sell_price}}
+                                @endif
+                            </p>
                         </div>
                     </div>
                 </div>
