@@ -83,6 +83,7 @@
             
             <div class="">
                 <div class="bg-white rounded-lg shadow-md p-6">
+                    {{-- Sub Amount --}}
                     <h2 class="text-lg font-semibold mb-4">Summary</h2>
                     <div class="flex justify-between mb-2">
                         <span>Subtotal</span>
@@ -97,11 +98,13 @@
                         <span>$0.00</span>
                     </div> --}}
                     <hr class="my-2">
+                    {{-- Total Amout --}}
                     <div class="flex justify-between mb-2">
                         <span class="font-semibold">Total</span>
                         <span class="font-semibold">BDT {{$cart['total']}}</span>
                     </div>
-                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                    {{-- Checkout Button --}}
+                    <a href="{{route('checkout')}}" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</a>
                 </div>
             </div>
             @endif

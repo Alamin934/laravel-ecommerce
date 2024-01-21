@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontEnd\{ProductController,CartController};
 
 /*
@@ -30,6 +31,7 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/cart', 'addToCart')->name('cart.add');
     Route::post('/cart/remove', 'removeFromCart')->name('cart.remove');
     Route::get('/cart/clear', 'clearCart')->name('cart.clear');
+    Route::get('/checkout', 'checkout')->middleware(['auth', 'verified'])->name('checkout');
 
 });
 

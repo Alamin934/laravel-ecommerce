@@ -51,7 +51,7 @@
                             d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                     </svg>
                 </li>
-                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="{{url('/profile')}}">My Profile</a>
+                <li><a class="text-sm text-gray-400 hover:text-gray-500" href="{{('/profile')}}">My Profile</a>
                 </li>
                 <li class="text-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"

@@ -89,4 +89,19 @@ class CartController extends Controller
 
         return redirect()->route('cart.show');
     }
+
+    public function checkout(){
+
+        $cart = session()->get('cart');
+        if(!empty($cart)){
+            $collection = collect($cart['product'])->map(function (array $product, int $key) {
+                return $product['price']*$product['quantity'];
+            });
+            $cart['total'] = Number::format($collection->sum(), 2);
+            return view('frontend.checkout', compact('cart'));
+        }else{
+            return redirect()->route('cart.show');
+        }
+
+    }
 }
