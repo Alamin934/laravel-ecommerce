@@ -25,8 +25,13 @@ Route::get('/', [HomeController::class, 'showHomePage'])->name('home');
 Route::get('/product/{slug}', [ProductController::class, 'showProductDetails'])->name('product.details');
 
 // Cart Controller
-Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'showCart')->name('cart.show');
+    Route::post('/cart', 'addToCart')->name('cart.add');
+    Route::post('/cart/remove', 'removeFromCart')->name('cart.remove');
+    Route::get('/cart/clear', 'clearCart')->name('cart.clear');
+
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

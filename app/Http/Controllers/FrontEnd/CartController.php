@@ -26,7 +26,7 @@ class CartController extends Controller
 
         try {
             $validated = $request->validate([
-                'product_id' => 'required',
+                'product_id' => 'required|numeric',
             ]);
         } catch (\ValidationException $e) {
             return redirect()->back();
@@ -44,6 +44,7 @@ class CartController extends Controller
             else{
                $cart['product'][$product->id] = [
                         'title' => $product->title,
+                        'slug' => $product->slug,
                         'price' => ($product->sell_price == 0 || $product->sell_price == null) ? $product->price : $product->sell_price,
                         'quantity' => 1,
                 ];
@@ -52,6 +53,7 @@ class CartController extends Controller
             $cart['product'] = [
                 $product->id => [
                     'title' => $product->title,
+                    'slug' => $product->slug,
                     'price' => ($product->sell_price == 0 || $product->sell_price == null) ? $product->price : $product->sell_price,
                     'quantity' => 1,
                 ]
@@ -60,6 +62,30 @@ class CartController extends Controller
 
         session(['cart' => $cart]);
         session()->flash("message", $product->title." added to cart.");
+
+        return redirect()->route('cart.show');
+    }
+
+    public function removeFromCart(Request $request){
+        try {
+            $validated = $request->validate([
+                'product_id' => 'required|numeric',
+            ]);
+        } catch (\ValidationException $e) {
+            return redirect()->back();
+        }
+
+        $cart = session()->get('cart');
+        unset($cart['product'][$request->product_id]);
+        session(['cart' => $cart]);
+        session()->flash("message", "Product removed from your cart.");
+
+        return redirect()->route('cart.show');
+    }
+
+    public function clearCart(){
+
+        session()->forget('cart');
 
         return redirect()->route('cart.show');
     }
