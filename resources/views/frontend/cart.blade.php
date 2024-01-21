@@ -12,25 +12,20 @@
     }
 </style>
 @endpush
-<pre>
-@foreach ($cart['product'] as $key => $product)
-{{-- @foreach ($product as $key => $pd)
-    @php
-        // print_r($key);
-        $pro = \App\Models\Product::find($key)->getFirstMediaUrl();
-        print_r($pro->getFirstMediaUrl());
-    @endphp
-@endforeach --}}
-@php
-    print_r($key)
-@endphp
-@endforeach
-</pre>
+
+
 @section('main-content')
 <div class=" h-screen py-8">
     <div class="container px-4 mx-auto py-12">
+        @if (empty($cart))
+        <h1 class="text-2xl text-center font-semibold mb-4">Cart is Empty</h1>
+        @else
         <h1 class="text-2xl text-center font-semibold mb-4">Shopping Cart</h1>
-
+        @if (session()->has('message'))
+        <div class="bg-emerald-200 font-semibold text-green-700 p-4 mb-3 rounded">
+            {{session('message')}}
+        </div>
+        @endif
         <div class="grid grid-cols-2 gap-4">
 
             <div class="">
@@ -45,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cart['product'] as $product)
+                            @foreach ($cart['product'] as $key => $product)
                             <tr class="mb-3 border-b-2">
                                 <td class="py-4">
                                     <div class="flex items-center">
@@ -63,7 +58,8 @@
                                         <button class="border rounded-md py-2 px-4 ml-2">+</button>
                                     </div>
                                 </td>
-                                <td class="py-4">BDT {{$product['price']*$product['quantity']}}</td>
+                                <td class="py-4">BDT {{\Number::format(($product['price']*$product['quantity']), 2)}}
+                                </td>
                             </tr>
                             @endforeach
                             <!-- More product rows -->
@@ -71,13 +67,12 @@
                     </table>
                 </div>
             </div>
-
             <div class="">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-lg font-semibold mb-4">Summary</h2>
                     <div class="flex justify-between mb-2">
                         <span>Subtotal</span>
-                        <span>$19.99</span>
+                        <span>BDT {{$cart['total']}}</span>
                     </div>
                     {{-- <div class="flex justify-between mb-2">
                         <span>Taxes</span>
@@ -90,12 +85,12 @@
                     <hr class="my-2">
                     <div class="flex justify-between mb-2">
                         <span class="font-semibold">Total</span>
-                        <span class="font-semibold">$21.98</span>
+                        <span class="font-semibold">BDT {{$cart['total']}}</span>
                     </div>
                     <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                 </div>
             </div>
-
+            @endif
 
         </div>
 

@@ -5,14 +5,20 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Number;
 
 class CartController extends Controller
 {
     public function showCart(){
+            $cart = session()->get('cart');
+            if($cart){
+                $collection = collect($cart['product'])->map(function (array $product, int $key) {
+                    return $product['price']*$product['quantity'];
+                });
+                $cart['total'] = Number::format($collection->sum(), 2);
+            }
 
-        $cart = session()->get('cart');
-        return view('frontend.cart', compact('cart'));
+            return view('frontend.cart', compact('cart'));
     }
 
     public function addToCart(Request $request){
@@ -53,7 +59,7 @@ class CartController extends Controller
         }
 
         session(['cart' => $cart]);
-        session()->flush("message", $product->title." added to cart.");
+        session()->flash("message", $product->title." added to cart.");
 
         return redirect()->route('cart.show');
     }
