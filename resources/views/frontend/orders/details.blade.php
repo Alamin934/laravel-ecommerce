@@ -3,7 +3,12 @@
 @section('main-content')
 <section>
     <div class="container mx-auto px-5">
-        <div class="py-14 px-4 2xl:px-6 2xl:container 2xl:mx-auto">
+        <div class="py-14 px-4 2xl:px-6 2xl:container 2xl:mx-auto mb-4">
+            @if (session()->has('message'))
+            <div class="bg-green-200 text-green-500 font-semibold w-1/2 p-3 rounded">
+                {{session('message')}}
+            </div>
+            @endif
             <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
             @foreach ($orders as $order_details)
             <div class="flex justify-start item-start space-y-2 flex-col">

@@ -145,8 +145,9 @@ class CartController extends Controller
             ]);
         }
 
+        session()->flash('message','Order Placed Successfully');
         session()->forget(['cart', 'total']);
-        return redirect()->route('home');
+        return redirect()->route('order.details', $order->id);
 
     }
 
@@ -156,7 +157,7 @@ class CartController extends Controller
     }
 
     public function orderDetails($order_id){
-        $orders = Order::with('product')->where('id', $order_id)->get();
+        $orders = Order::with(['product', 'product.product'])->where('id', $order_id)->get();
         return view('frontend.orders.details', compact('orders'));
     }
 }
