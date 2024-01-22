@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{Product,Order};
 use Illuminate\Support\Number;
+use App\Notifications\OrderPlacedNotification;
 
 class CartController extends Controller
 {
@@ -109,7 +110,7 @@ class CartController extends Controller
     
         $validated = $request->validate([
             'customer_name' => 'required',
-            'customer_phone_number' => 'required|numeric',
+            'customer_phone_number' => 'required',
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',
@@ -144,6 +145,8 @@ class CartController extends Controller
                 'price'     => ($product['quantity']*$product['price']),
             ]);
         }
+
+        auth()->user()->notify(new OrderPlacedNotification($order));
 
         session()->flash('message','Order Placed Successfully');
         session()->forget(['cart', 'total']);
