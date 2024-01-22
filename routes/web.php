@@ -32,6 +32,9 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/cart/remove', 'removeFromCart')->name('cart.remove');
     Route::get('/cart/clear', 'clearCart')->name('cart.clear');
     Route::get('/checkout', 'checkout')->middleware(['auth', 'verified'])->name('checkout');
+    Route::post('/process/order', 'processOrder')->middleware('auth')->name('process.order');
+    Route::get('/my-orders', 'myOrders')->middleware(['auth', 'verified'])->name('my.orders');
+    Route::get('/order-details/{order_id}', 'orderDetails')->middleware(['auth', 'verified'])->name('order.details');
 
 });
 

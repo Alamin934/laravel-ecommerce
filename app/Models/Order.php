@@ -21,7 +21,7 @@ class Order extends Model
         return $this->hasOne(User::class, 'processed_by');
     }
 
-    public function products(){
+    public function product(){
         return $this->hasMany(OrderProduct::class);
     }
 }

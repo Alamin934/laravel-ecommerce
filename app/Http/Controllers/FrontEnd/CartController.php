@@ -4,7 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\{Product,Order};
 use Illuminate\Support\Number;
 
 class CartController extends Controller
@@ -103,5 +103,60 @@ class CartController extends Controller
             return redirect()->route('cart.show');
         }
 
+    }
+
+    public function processOrder(Request $request) {
+    
+        $validated = $request->validate([
+            'customer_name' => 'required',
+            'customer_phone_number' => 'required|numeric',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+        ]);
+
+        $cart = session()->get('cart');
+        // if($cart){
+            $collection = collect($cart['product'])->map(function (array $product, int $key) {
+                return $product['price']*$product['quantity'];
+            });
+            $cart['total'] = $collection->sum();
+        // }
+
+        $order = Order::create([
+            'customer_name' => $request->customer_name,
+            'customer_phone_number' => $request->customer_phone_number,
+            'address' => $request->address,
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'total_amount' => $cart['total'],
+            'paid_amount' => $cart['total'],
+            'payment_details' => "Cash on Delivery",
+            'user_id' => auth()->user()->id,
+        ]);
+        // dd($order);
+
+        foreach ($cart['product'] as $key => $product) {
+            
+            $order->product()->create([
+                'product_id' => $key,
+                'quantity' => $product['quantity'],
+                'price'     => ($product['quantity']*$product['price']),
+            ]);
+        }
+
+        session()->forget(['cart', 'total']);
+        return redirect()->route('home');
+
+    }
+
+    public function myOrders(){
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+        return view('profile.my-orders', compact('orders'));
+    }
+
+    public function orderDetails($order_id){
+        $orders = Order::with('product')->where('id', $order_id)->get();
+        return view('frontend.orders.details', compact('orders'));
     }
 }

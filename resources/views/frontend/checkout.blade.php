@@ -11,7 +11,18 @@
                         <h1 class="relative text-2xl font-medium text-gray-700 sm:text-3xl">Shipping Details<span
                                 class="mt-2 block h-1 w-10 bg-indigo-600 sm:w-20"></span></h1>
                         {{-- Shipping Form --}}
-                        <form action="" method="POST" class="mt-10 flex flex-col space-y-4">
+
+                        <form action="{{ route('process.order')}}" method="POST" class="mt-10 flex flex-col space-y-4">
+                            @csrf
+                            @if ($errors->any())
+                            <div class="bg-red-200 text-red-500 p-3 mb-3">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                             {{-- Email --}}
                             <div>
                                 <label for="email" class="text-xs font-semibold text-gray-500">Email</label>
@@ -21,14 +32,14 @@
                             {{-- Customer Name --}}
                             <div class="relative">
                                 <label for="name" class="text-xs font-semibold text-gray-500">Name</label>
-                                <input type="text" id="name" name="name" value="{{auth()->user()->name}}"
+                                <input type="text" id="name" name="customer_name" value="{{auth()->user()->name}}"
                                     class="block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-indigo-500" />
                             </div>
                             {{-- Phone Number --}}
                             <div class="relative">
                                 <label for="phone-number" class="text-xs font-semibold text-gray-500">Phone
                                     number</label>
-                                <input type="text" id="phone-number" name="phone_number"
+                                <input type="text" id="phone-number" name="customer_phone_number"
                                     value="{{auth()->user()->phone_number}}" class=" block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-sm
                                     placeholder-gray-300 shadow-sm outline-none transition focus:ring-2
                                     focus:ring-indigo-500" />
